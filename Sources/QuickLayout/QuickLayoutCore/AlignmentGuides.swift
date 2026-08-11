@@ -9,10 +9,10 @@ import Foundation
 
 // MARK: - AlignmentGuides
 
-struct AlignmentGuides: Sequence {
-  struct Iterator: IteratorProtocol {
+public struct AlignmentGuides: Sequence, Sendable {
+  public struct Iterator: IteratorProtocol {
     var impl: Dictionary<AnyAlignmentID, @Sendable (ElementDimensions) -> CGFloat>.Iterator?
-    mutating func next() -> (key: AnyAlignmentID, value: @Sendable (ElementDimensions) -> CGFloat)? {
+    public mutating func next() -> (key: AnyAlignmentID, value: @Sendable (ElementDimensions) -> CGFloat)? {
       impl?.next()
     }
   }
@@ -45,14 +45,14 @@ struct AlignmentGuides: Sequence {
     return AlignmentGuides(copy)
   }
 
-  func makeIterator() -> Iterator {
+  public func makeIterator() -> Iterator {
     return Iterator(impl: value?.makeIterator())
   }
 }
 
 // MARK: - AlignmentGuidesResolver
 
-struct AlignmentGuidesResolver {
+public struct AlignmentGuidesResolver {
   private static let defaultAlignmentIDs: Set<AnyAlignmentID> = [
     VerticalAlignment.top.alignmentID,
     VerticalAlignment.center.alignmentID,
@@ -69,7 +69,7 @@ struct AlignmentGuidesResolver {
    should not use this result. The behavior applied will ensure that alignment
    guides are propagated, so that they can be used by a container layout if needed.
   */
-  static func extract(_ child: LayoutNode.Child) -> AlignmentGuides {
+  public static func extract(_ child: LayoutNode.Child) -> AlignmentGuides {
     var alignmentGuides = AlignmentGuides()
     let position = child.position
     let childDimensions = child.layout.dimensions
@@ -94,7 +94,7 @@ struct AlignmentGuidesResolver {
    default alignment guides will not be. Multiple child layouts, such
    as stacks, should use this result.
   */
-  static func extract(for children: [LayoutNode.Child]) -> AlignmentGuides {
+  public static func extract(for children: [LayoutNode.Child]) -> AlignmentGuides {
     var alignmentGuideAggregation = [AnyAlignmentID: [@Sendable (ElementDimensions) -> CGFloat]]()
 
     /// Using indexed for loop and capturing CGPoint position into the block makes the function ~2x faster.
@@ -126,7 +126,7 @@ struct AlignmentGuidesResolver {
    Use this alignment guide result when you are creating a leaf layout
    node that has no children.
   */
-  static func none() -> AlignmentGuides {
+  public static func none() -> AlignmentGuides {
     return AlignmentGuides()
   }
 }

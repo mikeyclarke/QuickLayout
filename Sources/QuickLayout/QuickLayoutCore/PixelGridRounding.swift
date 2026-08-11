@@ -48,7 +48,7 @@ func roundSizeToPixelGrid(_ value: CGFloat, screenScale: CGFloat = ScreenScale.v
 }
 
 @inline(__always)
-func roundToPixelGrid(_ p: CGPoint) -> CGPoint {
+public func roundToPixelGrid(_ p: CGPoint) -> CGPoint {
   let screenScale = ScreenScale.value
   return CGPoint(
     x: round(p.x, valueType: .position, screenScale: screenScale),
@@ -57,7 +57,7 @@ func roundToPixelGrid(_ p: CGPoint) -> CGPoint {
 }
 
 @inline(__always)
-func roundToPixelGrid(_ s: CGSize) -> CGSize {
+public func roundToPixelGrid(_ s: CGSize) -> CGSize {
   let screenScale = ScreenScale.value
   return CGSize(
     width: round(s.width, valueType: .size, screenScale: screenScale),

@@ -30,7 +30,7 @@ public struct LayoutNode: Sendable {
     self.children = []
   }
 
-  init(view: UIView?, size: CGSize, children: [Child], alignmentGuides: AlignmentGuides) {
+  public init(view: UIView?, size: CGSize, children: [Child], alignmentGuides: AlignmentGuides) {
     self.view = view
     self.children = children
     self.gridInfo = nil
