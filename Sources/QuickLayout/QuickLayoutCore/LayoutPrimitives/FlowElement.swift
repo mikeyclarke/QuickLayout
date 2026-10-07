@@ -41,7 +41,24 @@ public struct FlowElement: Layout {
   }
 
   public func quick_flexibility(for axis: Axis) -> Flexibility {
-    return .fixedSize
+    if children.isEmpty {
+      return .fixedSize
+    }
+
+    var result = Flexibility.fixedSize
+    LayoutContext.$latestMainAxis.withValue(mainAxis) {
+      for child in children {
+        let flexibility = child.quick_flexibility(for: axis)
+        if flexibility.rawValue > result.rawValue {
+          result = flexibility
+        }
+        if result == .fullyFlexible {
+          break
+        }
+      }
+    }
+
+    return result
   }
 
   public func quick_layoutPriority() -> CGFloat {
