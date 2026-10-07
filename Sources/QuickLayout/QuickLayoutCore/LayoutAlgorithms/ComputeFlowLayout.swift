@@ -33,7 +33,8 @@ private func layoutLine(children: [LayoutNode], itemSpacing: CGFloat, mainAxis: 
   if reverseItems {
     positionedChildren.reverse()
   }
-  return LayoutNode(view: nil, size: resultFrame.size, children: positionedChildren, alignmentGuides: AlignmentGuidesResolver.extract(for: positionedChildren))
+  let lineSize = CGSize(width: roundSizeToPixelGrid(resultFrame.width), height: roundSizeToPixelGrid(resultFrame.height))
+  return LayoutNode(view: nil, size: lineSize, children: positionedChildren, alignmentGuides: AlignmentGuidesResolver.extract(for: positionedChildren))
 }
 private func splitNodesIntoLines(main: CGFloat, children: [LayoutNode], itemSpacing: CGFloat, mainAxis: Axis) -> [[LayoutNode]] {
   var lines: [[LayoutNode]] = []
