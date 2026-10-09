@@ -45,7 +45,7 @@ private func splitNodesIntoLines(main: CGFloat, children: [LayoutNode], itemSpac
   for child in children {
     let childMainSize = child.size.main(for: mainAxis)
     let remainingMain = maxMainSize - totalMainSize + fitTolerance
-    if remainingMain >= childMainSize {
+    if currentLine.isEmpty || remainingMain >= childMainSize {
       // Add child to current line
       currentLine.append(child)
       totalMainSize += childMainSize + itemSpacing
